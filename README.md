@@ -1,4 +1,4 @@
-# ID Open
+# RemoteID Spoofer
 
 An ESP8266/NodeMCU Drone RemoteID Spoofer.
 
