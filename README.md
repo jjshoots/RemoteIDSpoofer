@@ -23,6 +23,7 @@ This spawns 16 different fake drones broadcasting RemoteID, with them all flying
 
 ## To-Do List
 
-1. Add GPS capability to automatically create IDs wherever the device is located.
+1. Set custom MAC address for each Remote ID instance.
+2. Add GPS capability to automatically create IDs wherever the device is located.
 
 
