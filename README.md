@@ -8,7 +8,7 @@ I stand on the shoulders of giants.
 
 This spawns 16 different fake drones broadcasting RemoteID, with them all flying in random directions around a particular GPS location.
 
-<img src="./images/proof.jpg"  width="600">
+<img src="./images/proof.jpg"  width="300">
 
 ## Installation
 
