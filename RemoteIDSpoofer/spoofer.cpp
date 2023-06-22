@@ -23,7 +23,7 @@ Spoofer::Spoofer() {
 
   // define location
   //  52° 24' 24.4404" -1° 29' 36.564"W
-  lat_d = 
+  lat_d =
   utm_data.latitude_d =
   utm_data.base_latitude = 52.0 + (24.0 / 60.0) + (24.4404 / 3600.0);
   long_d =
@@ -40,8 +40,6 @@ Spoofer::Spoofer() {
   speed_m_x = ((float) speed_kn) * 0.514444 * 0.2; // Because we update every 200 ms.
 
   utm_utils.calc_m_per_deg(lat_d,&m_deg_lat,&m_deg_long);
-
-  srand(micros());
 }
 
 void Spoofer::update() {

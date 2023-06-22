@@ -138,6 +138,7 @@ private:
   char                   *UAS_operator;
   uint8_t                 msg_counter[16];
   uint16_t                wifi_interval = 0, ble_interval = 0;
+  uint32_t                last_ble = 0, last_wifi = 0, msecs = 0, last_msecs = 2000;
   Stream                 *Debug_Serial = NULL;
 
   char                    ssid[32];
