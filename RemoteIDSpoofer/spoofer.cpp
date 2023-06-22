@@ -23,7 +23,7 @@ Spoofer::Spoofer() {
 
   // define location
   //  52° 24' 24.4404" -1° 29' 36.564"W
-  lat_d = 
+  lat_d =
   utm_data.latitude_d =
   utm_data.base_latitude = 52.0 + (24.0 / 60.0) + (24.4404 / 3600.0);
   long_d =
@@ -69,6 +69,7 @@ void Spoofer::update() {
 }
 
 String Spoofer::getID() {
+  srand(micros())
   String characters = String("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
   String ID = "";
   for (int i = 0; i < 16; i++)
