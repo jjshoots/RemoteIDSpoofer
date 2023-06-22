@@ -161,7 +161,6 @@ int transmit_wifi2(uint8_t *buffer,int length) {
 #if ID_OD_WIFI
 
   if (length) {
-
     wifi_send_pkt_freedom(buffer,length,1);
   }
 

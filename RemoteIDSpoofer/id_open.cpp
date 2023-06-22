@@ -69,8 +69,12 @@ ID_OpenDrone::ID_OpenDrone() {
 #if ID_OD_WIFI
 
   // scrambled, not poached
-  for (int i = 0; i < 6; i++) {
-    WiFi_mac_addr[i] = (uint8_t) (rand() % 16);
+  // Nodemcu doesn't like certain mac addresses
+  // setting the first value to 0 seems to solve this
+  WiFi_mac_addr[i] = 0;
+  for (int i = 1; i < 6; i++) {
+    // WiFi_mac_addr[i] = (uint8_t) (rand() % 100 + 100);
+    WiFi_mac_addr[i] = (uint8_t) (rand() % 256);
   }
   
   memset(ssid,0,sizeof(ssid));
@@ -575,8 +579,6 @@ int ID_OpenDrone::transmit(struct UTM_data *utm_data) {
 
   // Pack and transmit the WiFi data.
 
-  static uint8_t  wifi_toggle = 1;
-
   if ((msecs - last_wifi) >= beacon_interval) {
 
     last_wifi = msecs;
@@ -783,9 +785,7 @@ int ID_OpenDrone::transmit_wifi(struct UTM_data *utm_data,int prepacked) {
                              odid_message_build_pack(&UAS_data,beacon_payload,beacon_max_packed);
 
   if (length > 0) {
-
     *beacon_length = length + 5;
-
     wifi_status = transmit_wifi2(beacon_frame,len2 = beacon_offset + length);
   }
 
