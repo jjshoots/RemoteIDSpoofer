@@ -66,8 +66,7 @@ void init2(char *ssid,int ssid_length,uint8_t *WiFi_mac_addr,uint8_t wifi_channe
   softap_config wifi_config;
 
   WiFi.mode(WIFI_OFF);
-
-  WiFi.macAddress(WiFi_mac_addr);
+  // WiFi.macAddress(WiFi_mac_addr);
 
   WiFi.softAP(ssid,NULL,wifi_channel,false,0);
   WiFi.setOutputPower(20.0);
@@ -162,7 +161,6 @@ int transmit_wifi2(uint8_t *buffer,int length) {
 #if ID_OD_WIFI
 
   if (length) {
-
     wifi_send_pkt_freedom(buffer,length,1);
   }
 

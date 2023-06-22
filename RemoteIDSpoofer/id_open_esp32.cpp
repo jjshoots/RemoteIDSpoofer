@@ -189,7 +189,8 @@ void init2(char *ssid,int ssid_length,uint8_t *WiFi_mac_addr,uint8_t wifi_channe
   // esp_wifi_set_max_tx_power(78);
   esp_wifi_get_max_tx_power(&wifi_power);
 
-  status = esp_read_mac(WiFi_mac_addr,ESP_MAC_WIFI_STA);  
+  // no default mac addresses
+  // status = esp_read_mac(WiFi_mac_addr,ESP_MAC_WIFI_STA);  
 
   if (Debug_Serial) {
     
