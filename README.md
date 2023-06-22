@@ -13,17 +13,16 @@ This spawns 16 different fake drones broadcasting RemoteID, with them all flying
 ## Installation
 
 1. You need the [Arduino IDE](https://www.arduino.cc/en/software).
-2. In Arduino IDE, go to `File` > `Preferences`, then add this URL to the `Additional Boards Manager URLs`:
+2. Open the file `RemoteIDSpoofer/RemoteIDSpoofer.ino`.
+3. In Arduino IDE, go to `File` > `Preferences`, then add this URL to the `Additional Boards Manager URLs`:
 	- https://raw.githubusercontent.com/SpacehuhnTech/arduino/main/package_spacehuhn_index.json
-3. Now go to `Tools` > `Boards` > `Boards Manager`, search `deauther` and install `Deauther ESP8266 Boards`.
-4. Select your board at `Tools` > `Board` > and be sure it is at `Deauther ESP8266 Boards` (and not at `ESP8266 Modules`).
-5. Plug in your device, I used a NodeMCU v3, and select its COM port at `Tools` > `Port`.
-6. Press `upload`, or use Ctrl+U.
-7. The device should start broadcasting RemoteID packets generated for random flying machines.
+4. Now go to `Tools` > `Boards` > `Boards Manager`, search `deauther` and install `Deauther ESP8266 Boards`.
+5. Select your board at `Tools` > `Board` > and be sure it is at `Deauther ESP8266 Boards` (and not at `ESP8266 Modules`).
+6. Plug in your device, I used a NodeMCU v2, and select its COM port at `Tools` > `Port`.
+7. Press `upload`, or use Ctrl+U.
+8. The device should start broadcasting RemoteID packets generated for random flying machines.
 
 ## To-Do List
 
 1. Set custom MAC address for each Remote ID instance.
 2. Add GPS capability to automatically create IDs wherever the device is located.
-
-
