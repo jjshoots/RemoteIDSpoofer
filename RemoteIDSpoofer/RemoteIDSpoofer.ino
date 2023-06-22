@@ -5,6 +5,7 @@
 #include <ESP8266WiFi.h>
 #include "spoofer.h"
 
+// we are limited by how fast we can broadcast things
 const int num_spoofers = 16;
 static Spoofer spoofers[num_spoofers];
 
@@ -13,8 +14,8 @@ void setup() {
 }
 
 void loop() {
-  delay(50);
   for (int i = 0; i < num_spoofers; i++) {
     spoofers[i].update();
+    delay(10);
   }
 }

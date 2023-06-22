@@ -68,12 +68,16 @@ ID_OpenDrone::ID_OpenDrone() {
 
 #if ID_OD_WIFI
 
-  memset(WiFi_mac_addr,0,6);
+  // scrambled, not poached
+  for (int i = 0; i < 6; i++) {
+    WiFi_mac_addr[i] = (uint8_t) (rand() % 16);
+  }
+  
   memset(ssid,0,sizeof(ssid));
 
   strcpy(ssid,"UAS_ID_OPEN");
 
-  beacon_interval = (BEACON_INTERVAL) ? BEACON_INTERVAL: 500;
+  beacon_interval = 10;
   
 #if ID_OD_WIFI_BEACON
 
@@ -409,10 +413,8 @@ int ID_OpenDrone::transmit(struct UTM_data *utm_data) {
 
   int              i, status;
   char             text[128];
-  uint32_t         msecs;
   time_t           secs = 0;
   static int       phase = 0;
-  static uint32_t  last_msecs = 2000;
 
   //
 
@@ -574,7 +576,6 @@ int ID_OpenDrone::transmit(struct UTM_data *utm_data) {
   // Pack and transmit the WiFi data.
 
   static uint8_t  wifi_toggle = 1;
-  static uint32_t last_wifi = 0;
 
   if ((msecs - last_wifi) >= beacon_interval) {
 
@@ -653,9 +654,7 @@ int ID_OpenDrone::transmit_wifi(struct UTM_data *utm_data,int prepacked) {
 #if ID_OD_WIFI
 
   int             length = 0, wifi_status = 0;
-  uint32_t        msecs;
   uint64_t        usecs = 0;
-  static uint32_t last_wifi = 0;
   char text[128];
 
   text[0] = 0;
@@ -833,9 +832,6 @@ int ID_OpenDrone::transmit_wifi(struct UTM_data *utm_data,int prepacked) {
  */
 
 int ID_OpenDrone::transmit_ble(uint8_t *odid_msg,int length) {
-
-  uint32_t        msecs;
-  static uint32_t last_ble;
   
   msecs        = millis();
   ble_interval = msecs - last_ble;

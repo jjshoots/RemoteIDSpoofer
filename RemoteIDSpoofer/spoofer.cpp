@@ -40,8 +40,6 @@ Spoofer::Spoofer() {
   speed_m_x = ((float) speed_kn) * 0.514444 * 0.2; // Because we update every 200 ms.
 
   utm_utils.calc_m_per_deg(lat_d,&m_deg_lat,&m_deg_long);
-
-  srand(micros());
 }
 
 void Spoofer::update() {
@@ -69,7 +67,6 @@ void Spoofer::update() {
 }
 
 String Spoofer::getID() {
-  srand(micros())
   String characters = String("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
   String ID = "";
   for (int i = 0; i < 16; i++)
