@@ -68,6 +68,13 @@ void init2(char *ssid,int ssid_length,uint8_t *WiFi_mac_addr,uint8_t wifi_channe
   WiFi.mode(WIFI_OFF);
 
   WiFi.macAddress(WiFi_mac_addr);
+  Serial.begin(115200);
+  Serial.print(WiFi_mac_addr[0]);
+  Serial.print(WiFi_mac_addr[1]);
+  Serial.print(WiFi_mac_addr[2]);
+  Serial.print(WiFi_mac_addr[3]);
+  Serial.print(WiFi_mac_addr[4]);
+  Serial.println(WiFi_mac_addr[5]);
 
   WiFi.softAP(ssid,NULL,wifi_channel,false,0);
   WiFi.setOutputPower(20.0);
