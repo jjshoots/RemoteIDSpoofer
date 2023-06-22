@@ -43,7 +43,8 @@ Spoofer::Spoofer() {
 }
 
 void Spoofer::update() {
-  if ((millis() - last_update) < 200) {
+  // FAA says minimum rate is 1 Hz, we do 2 Hz here
+  if ((millis() - last_update) < 500) {
     return;
   }
 
