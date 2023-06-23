@@ -33,11 +33,9 @@ Spoofer::Spoofer() {
 
   utm_data.alt_msl_m = utm_data.base_alt_m + z;
   utm_data.alt_agl_m = z;
-  utm_data.speed_kn = speed_kn;
+  utm_data.speed_kn = 1;
   utm_data.satellites = 8;
   utm_data.base_valid = 1;
-
-  speed_m_x = ((float) speed_kn) * 0.514444 * 0.2; // Because we update every 200 ms.
 
   utm_utils.calc_m_per_deg(lat_d,&m_deg_lat,&m_deg_long);
 }
@@ -47,6 +45,10 @@ void Spoofer::update() {
   if ((millis() - last_update) < 500) {
     return;
   }
+
+  // randomly update the velocity
+  utm_data.speed_kn = constrain(utm_data.speed_kn + (rand() % 5) - 2, 1, 20);
+  speed_m_x = ((float) utm_data.speed_kn) * 0.514444 * 0.2; // Because we update every 200 ms.
 
   // randomly pick a direction to head and update the heading
   float ranf = 0.001 * (float) (((int) rand() % 1000) - 500);

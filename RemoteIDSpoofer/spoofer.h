@@ -17,7 +17,6 @@ class Spoofer {
     struct UTM_parameters utm_parameters;
     struct UTM_data utm_data;
 
-    int speed_kn = (int) (rand() % 10);
     float x = 0.0, y = 0.0, z = 0.0;
     float speed_m_x, max_dir_change = 75.0;
     double deg2rad = (4.0 * atan(1.0)) / 180.0;
