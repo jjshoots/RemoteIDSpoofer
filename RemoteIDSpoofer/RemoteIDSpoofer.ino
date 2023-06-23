@@ -13,6 +13,6 @@ void setup() {
 void loop() {
   for (int i = 0; i < num_spoofers; i++) {
     spoofers[i].update();
-    delay(500 / num_spoofers);
+    delay(200 / num_spoofers);
   }
 }
