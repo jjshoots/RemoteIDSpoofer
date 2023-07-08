@@ -25,7 +25,7 @@ If you're using OpenDroneID available on the App Store or Play Store, you'll hav
 
 ## Usage
 
-1. After installation and uploading, connect to the wireless access point `ESP_RIDS` using the password `makkauhijau` on any device, a smartphone will work well enough.
+1. After the installation steps, connect to the wireless access point `ESP_RIDS` using the password `makkauhijau` on any device, a smartphone will work well enough.
 2. There, input your own GPS coordinates.
 3. Start spoofing!
 
