@@ -1,7 +1,5 @@
 # RIDS - Remote ID Spoofer
 
-**Disclaimer**: This repository and its code are intended for educational purposes only.
-
 An ESP8266/NodeMCU Drone RemoteID Spoofer.
 Built based on work done by [sxjack](https://github.com/sxjack/uav_electronic_ids) and [SpacehuhnTech](https://github.com/SpacehuhnTech/esp8266_deauther).
 I stand on the shoulders of giants.
@@ -12,6 +10,15 @@ Do check that whatever device you're using to detect the drones can sniff packet
 If you're using OpenDroneID available on the App Store or Play Store, you'll have to disable scan throttling for your device, and run the app for ~5-10 minutes before all 16 drones are actually "in the air".
 
 <img src="./images/proof.jpg"  width="600">
+
+## Disclaimer
+
+This repository and its code are intended for educational purposes only.
+Neither the ESP8266, nor its SDK were meant or built for such purposes.
+Bugs can occur!
+
+It is also illegal to be broadcasting fake RemoteID packets in public airspace, in the same way that spoofing ADS-B packets is illegal.
+Whatever manner you wish to use this on is at your own discretion, we don't take any responsibility for what you do with this software.
 
 ## Installation
 
