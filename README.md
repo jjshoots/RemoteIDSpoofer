@@ -11,15 +11,6 @@ If you're using OpenDroneID available on the App Store or Play Store, you'll hav
 
 <img src="./images/proof.jpg"  width="600">
 
-## Disclaimer
-
-This repository and its code are intended for educational purposes only.
-Neither the ESP8266, nor its SDK were meant or built for such purposes.
-Bugs can occur!
-
-It is also illegal to be broadcasting fake RemoteID packets in public airspace, in the same way that spoofing ADS-B packets is illegal.
-Whatever manner you wish to use this on is at your own discretion, we don't take any responsibility for what you do with this software.
-
 ## Installation
 
 1. You need the [Arduino IDE](https://www.arduino.cc/en/software).
@@ -31,6 +22,23 @@ Whatever manner you wish to use this on is at your own discretion, we don't take
 6. Plug in your device, I used a NodeMCU v2, and select its COM port at `Tools` > `Port`.
 7. Press `upload`, or use Ctrl+U.
 8. The device should start broadcasting RemoteID packets generated for random flying machines.
+
+## Usage
+
+1. After installation and uploading, connect to the wireless access point `ESP_RIDS` using the password `makkauhijau` on any device, a smartphone will work well enough.
+2. There, input your own GPS coordinates.
+3. Start spoofing!
+
+> If no GPS coordinates are used within 2 minutes of startup, the device will automatically go into spoofing mode and you will not be able to change the coordinates without a power cycle.
+
+## Disclaimer
+
+This repository and its code are intended for educational purposes only.
+Neither the ESP8266, nor its SDK were meant or built for such purposes.
+Bugs can occur!
+
+It is also illegal to be broadcasting fake RemoteID packets in public airspace, in the same way that spoofing ADS-B packets is illegal.
+Whatever manner you wish to use this on is at your own discretion, we don't take any responsibility for what you do with this software.
 
 ## To-Do List
 
