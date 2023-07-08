@@ -74,9 +74,9 @@ String Frontend::HTML() {
   )rawliteral";
 
   msg += "<p>Current Coordinates: ";
-  msg += String(latitude);
+  msg += String(latitude, 10);
   msg += ", ";
-  msg += String(longitude);
+  msg += String(longitude, 10);
   msg += "</p>\n";
 
   msg += "<p>Pressing this button will cause the device to turn off the web server and enter spoofing only mode.</p>\n";
