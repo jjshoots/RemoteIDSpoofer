@@ -34,7 +34,8 @@ class Spoofer {
     String getID();
 
   public:
-    Spoofer();
+    void init();
+    void updateLocation(float latitude, float longitude);
     void update();
 };
 

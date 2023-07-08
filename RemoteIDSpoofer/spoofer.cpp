@@ -1,6 +1,6 @@
 #include "spoofer.h"
 
-Spoofer::Spoofer() {
+void Spoofer::init() {
   // time things
   memset(&clock_tm,0,sizeof(struct tm));
   clock_tm.tm_hour  =  10;
@@ -19,16 +19,16 @@ Spoofer::Spoofer() {
   utm_parameters.EU_class    = 5;
   squitter.init(&utm_parameters);
   memset(&utm_data,0,sizeof(utm_data));
+}
 
-  // define location
-  // 52° 24' 24.4404" -1° 29' 36.564"W
-  // plus some noise
+void Spoofer::updateLocation(float latitude, float longitude) {
+  // define location plus some noise
   lat_d =
   utm_data.latitude_d =
-  utm_data.base_latitude = 52.0 + (24.0 / 60.0) + (24.4404 / 3600.0) + (float) (rand() % 10 - 5) / 10000.0;
+  utm_data.base_latitude = latitude + (float) (rand() % 10 - 5) / 10000.0;
   long_d =
   utm_data.longitude_d =
-  utm_data.base_longitude =  -1.0 - (29.0 / 60.0) - (36.564 / 3600.0) + (float) (rand() % 10 - 5) / 10000.0;
+  utm_data.base_longitude = longitude + (float) (rand() % 10 - 5) / 10000.0;
   utm_data.base_alt_m = (float) (rand() % 1000) / 10.0;
 
   utm_data.base_valid = 1;
@@ -48,7 +48,7 @@ void Spoofer::update() {
   utm_data.speed_kn = constrain(utm_data.speed_kn + (rand() % 5) - 2, 1, 20);
   speed_m_x = ((float) utm_data.speed_kn) * 0.514444 * 0.2; // Because we update every 200 ms.
 
-  // randomly pick a direction to head and update the heading
+  // randomly pick a direction to head
   float ranf = (float) (rand() % 1000 - 500) / 1000.0;
   int dir_change = (int) (max_dir_change * ranf);
   utm_data.heading = (utm_data.heading + dir_change + 360) % 360;
@@ -64,7 +64,7 @@ void Spoofer::update() {
   utm_data.alt_msl_m = utm_data.base_alt_m + z;
   utm_data.alt_agl_m = z;
 
-  // update the x, y
+  // update the x, y 
   utm_data.latitude_d  = utm_data.base_latitude  + (y / m_deg_lat);
   utm_data.longitude_d = utm_data.base_longitude + (x / m_deg_long);
 
