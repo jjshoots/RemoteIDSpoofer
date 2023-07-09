@@ -11,9 +11,8 @@ void setup() {
   
   // start the frontend and don't exit until either timer elapse or user ends it
   // the timer here is set at 2 minutes
-  unsigned long timer = millis();
-  Frontend frontend;
-  while (!frontend.do_spoof && (millis() - timer < 120000)) {
+  Frontend frontend(120000);
+  while (!frontend.do_spoof) {
     frontend.handleClient();
   }
 

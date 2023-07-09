@@ -1,6 +1,6 @@
 #include "frontend.h"
 
-Frontend::Frontend() 
+Frontend::Frontend(unsigned long idletime) 
   : server(80)
 {
   // AP parameters
@@ -21,10 +21,19 @@ Frontend::Frontend()
 
   // Starting the Server
   server.begin();
+
+  // record the time the server started and when to end
+  timer = millis();
+  maxtime = timer + idletime;
 }
 
 void Frontend::handleClient() {
   server.handleClient();
+
+  // automatically start spoofing if we've passed the maxtime
+  if (millis() > maxtime) {
+    startSpoof();
+  }
 }
 
 void Frontend::handleOnConnect() {
@@ -32,19 +41,20 @@ void Frontend::handleOnConnect() {
   server.send(200, "text/html", HTML()); 
 }
 
-void Frontend::handleNotFound() {
-  server.send(404, "text/plain", "Not found");
-}
-
-void Frontend::startSpoof() {
-  do_spoof = true;
-  WiFi.softAPdisconnect (true);
-}
-
 void Frontend::handleForm() {
   latitude = server.arg("latitude").toFloat(); 
   longitude = server.arg("longitude").toFloat();
   server.send(200, "text/html", HTML());
+}
+
+void Frontend::startSpoof() {
+  do_spoof = true;
+  server.stop();
+  WiFi.softAPdisconnect (true);
+}
+
+void Frontend::handleNotFound() {
+  server.send(404, "text/plain", "Not found");
 }
 
 String Frontend::HTML() {
@@ -56,7 +66,10 @@ String Frontend::HTML() {
         <title>Remote ID Spoofer</title>
         <style>
           html{font-family:Helvetica; display:inline-block; margin:0px auto; text-align:center;}
-          body{margin-top: 50px;} h1{color: #444444; margin: 50px auto 30px;} h3{color:#444444; margin-bottom: 50px;}
+          body{margin-top: 50px;}
+          h1{color: #444444; margin: 50px auto 30px;}
+          h3{color:#444444; margin-bottom: 50px;}
+          form{color:#444444; margin-bottom: 50px;}
           .button{display:block; width:80px; background-color:#f48100; border:none; color:white; padding: 13px 30px; text-decoration:none; font-size:25px; margin: 0px auto 35px; cursor:pointer; border-radius:4px;}
           .button-on{background-color:#f48100;}
           .button-on:active{background-color:#f48100;}
@@ -79,9 +92,9 @@ String Frontend::HTML() {
   msg += String(longitude, 10);
   msg += "</p>\n";
 
-  msg += "<p>Pressing this button will cause the device to turn off the web server and enter spoofing only mode.</p>\n";
-  msg += "<p>Please confirm your GPS coordinates before doing so.</p>\n";
-  msg += "<p>You will not be able to reconnect to this page without a power cycle.</p>\n";
+  msg += "<p>Pressing this button will cause the device to turn off the web server and enter spoofing only mode.\n";
+  msg += "Please confirm your GPS coordinates before doing so.\n";
+  msg += "You will not be able to reconnect to this page without a power cycle.</p>\n";
   msg += "<a class=\"button button-on\" href=\"/start\">Start Spoofing</a>\n";
 
   msg += R"rawliteral(
