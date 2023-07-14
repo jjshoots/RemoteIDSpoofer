@@ -32,6 +32,15 @@ If you're using OpenDroneID available on the App Store or Play Store, you'll hav
 
 > If no GPS coordinates are used within 2 minutes of startup, the device will automatically go into spoofing mode and you will not be able to change the coordinates without a power cycle.
 
+## To-Do List
+
+- [ ] Get time from browser (possibly with [this](https://www.w3schools.com/jsref/jsref_gettime.asp))
+- [ ] Get GPS from browser? (Requires SSL certs on frontend)
+- [ ] ESP32 support
+- [ ] Use valid RIDs and have option to select region
+- [ ] Configurable number of drones in the air
+- [ ] Make it so drones don't wander away over time (something like `new_location = old_location + 0.5 * progress + 0.5 * (home - old_location)`)
+
 ## Disclaimer
 
 This repository and its code are intended for educational purposes only.
