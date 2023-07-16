@@ -35,7 +35,7 @@ If you're using OpenDroneID available on the App Store or Play Store, you'll hav
 ## To-Do List (In order of importance)
 
 - [ ] ESP32 support
-- [ ] Make it so drones don't wander away over time (something like `new_location = old_location + 0.5 * progress + 0.5 * (home - old_location)`)
+- [x] Make it so drones don't wander away over time (something like `new_location = old_location + 0.5 * progress + 0.5 * (home - old_location)`)
 - [ ] Get time from browser (possibly with [this](https://www.w3schools.com/jsref/jsref_gettime.asp))
 - [x] Configurable number of drones in the air
 - [ ] Save config onboard
