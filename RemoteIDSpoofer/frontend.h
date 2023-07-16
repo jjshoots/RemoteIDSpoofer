@@ -1,5 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <EEPROM.h>
 
 #ifndef FRONTEND_H
 #define FRONTEND_H
@@ -15,6 +16,10 @@ class Frontend {
     void handleNotFound();
     unsigned long maxtime = 0.0;
     unsigned long timer = 0.0;
+
+    const int latitude_addr = 100;
+    const int longitude_addr = 110;
+    const int num_drones_addr = 120;
 
   public:
     Frontend(unsigned long idletime);

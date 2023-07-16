@@ -20,6 +20,18 @@ Frontend::Frontend(unsigned long idletime)
   server.on("/start", std::bind(&Frontend::startSpoof, this));
   server.onNotFound(std::bind(&Frontend::handleNotFound, this));
 
+  // read parameters from EEPROM
+  EEPROM.begin(512);
+  // if the value at address 42 is 42, then we know that we have past data
+  if (EEPROM.read(42) == 42) {
+    Serial.println("EEPROM found, reusing old values...");
+    EEPROM.get(latitude_addr, latitude);
+    EEPROM.get(longitude_addr, longitude);
+    EEPROM.get(num_drones_addr, num_drones);
+  } else {
+    Serial.println("EEPROM data not written before...");
+  }
+
   // Starting the Server
   server.begin();
 
@@ -45,11 +57,14 @@ void Frontend::handleOnConnect() {
 void Frontend::handleSetCoords() {
   latitude = server.arg("latitude").toFloat(); 
   longitude = server.arg("longitude").toFloat();
+  EEPROM.put(latitude_addr, latitude);
+  EEPROM.put(longitude_addr, latitude);
   server.send(200, "text/html", HTML());
 }
 
 void Frontend::handleNumDrones() {
   num_drones = server.arg("numdrones").toInt();
+  EEPROM.put(num_drones_addr, num_drones);
   server.send(200, "text/html", HTML());
 }
 
@@ -57,6 +72,8 @@ void Frontend::startSpoof() {
   do_spoof = true;
   server.stop();
   WiFi.softAPdisconnect (true);
+  EEPROM.put(42, 42);
+  EEPROM.end();
 }
 
 void Frontend::handleNotFound() {
