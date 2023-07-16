@@ -25,6 +25,10 @@ If you're using OpenDroneID available on the App Store or Play Store, you'll hav
 
 ## Usage
 
+**Pro Tip**:
+There is no need to do these steps everytime you use the device, once the parameters are set, they are remembered across power cycles.
+Configuration is only needed when when parameter change is desired.
+
 1. After the installation steps, connect to the wireless access point `ESP_RIDS` using the password `makkauhijau` on any device, a smartphone will work well enough.
 2. Go to the website `192.168.4.1` on the connected device.
 3. There, input your own GPS coordinates.
