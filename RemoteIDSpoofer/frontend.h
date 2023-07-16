@@ -9,7 +9,8 @@ class Frontend {
     ESP8266WebServer server;
     String HTML();
     void handleOnConnect();
-    void handleForm();
+    void handleSetCoords();
+    void handleNumDrones();
     void startSpoof();
     void handleNotFound();
     unsigned long maxtime = 0.0;
@@ -21,6 +22,7 @@ class Frontend {
     bool do_spoof = false;
     double latitude = 52.439100;
     double longitude = -1.503900;
+    int num_drones = 16;
 };
 
 #endif

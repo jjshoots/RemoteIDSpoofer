@@ -15,7 +15,8 @@ Frontend::Frontend(unsigned long idletime)
 
   // Specify the functions which will be executed upon corresponding GET request
   server.on("/", std::bind(&Frontend::handleOnConnect, this));
-  server.on("/getlocation", std::bind(&Frontend::handleForm, this)); 
+  server.on("/getlocation", std::bind(&Frontend::handleSetCoords, this)); 
+  server.on("/numdrones", std::bind(&Frontend::handleNumDrones, this)); 
   server.on("/start", std::bind(&Frontend::startSpoof, this));
   server.onNotFound(std::bind(&Frontend::handleNotFound, this));
 
@@ -41,9 +42,14 @@ void Frontend::handleOnConnect() {
   server.send(200, "text/html", HTML()); 
 }
 
-void Frontend::handleForm() {
+void Frontend::handleSetCoords() {
   latitude = server.arg("latitude").toFloat(); 
   longitude = server.arg("longitude").toFloat();
+  server.send(200, "text/html", HTML());
+}
+
+void Frontend::handleNumDrones() {
+  num_drones = server.arg("numdrones").toInt();
   server.send(200, "text/html", HTML());
 }
 
@@ -67,10 +73,11 @@ String Frontend::HTML() {
         <style>
           html{font-family:Helvetica; display:inline-block; margin:0px auto; text-align:center;}
           body{margin-top: 50px;}
-          h1{color: #444444; margin: 50px auto 30px;}
+          h1{color: #444444; margin: 50px auto 30px; font-size:6em;}
           h3{color:#444444; margin-bottom: 50px;}
-          form{color:#444444; margin-bottom: 50px;}
-          .button{display:block; width:80px; background-color:#f48100; border:none; color:white; padding: 13px 30px; text-decoration:none; font-size:25px; margin: 0px auto 35px; cursor:pointer; border-radius:4px;}
+          .configurator{font-size:4.0em; margin-bottom: 50px;}
+          .selection{font-size:1.0em;}
+          .button{display:block; background-color:#f48100; border:none; color:white; padding: 13px 30px; text-decoration:none; font-size:6em; margin: 0px auto 35px; cursor:pointer; border-radius:4px;}
           .button-on{background-color:#f48100;}
           .button-on:active{background-color:#f48100;}
           .button-off{background-color:#26282d;}
@@ -79,23 +86,51 @@ String Frontend::HTML() {
       </head>
       <body>
         <h1>Remote ID Spoofer</h1>
-        <form action="/getlocation">
-          Latitude: <input type="text" name="latitude">
-          Longitude: <input type="text" name="longitude">
-          <input type="submit" value="Submit">
+        <form class="configurator" action="/getlocation">
+          Latitude: <input class="selection" type="text" name="latitude">
+          <br>
+          Longitude: <input class="selection" type="text" name="longitude">
+          <br>
+          <input class="selection" type="submit" value="Submit">
+        </form>
+        <form class="configurator" action="/numdrones">
+          No. of Drones:
+          <select class="selection" name="numdrones">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+            <option value="16">16</option>
+          </select>
+          <input class="selection" type="submit" value="Submit">
         </form>
   )rawliteral";
 
-  msg += "<p>Current Coordinates: ";
+  msg += "<p><b>Current Coordinates:</b><br>";
   msg += String(latitude, 10);
   msg += ", ";
   msg += String(longitude, 10);
   msg += "</p>\n";
 
+  msg += "<p><b>Current No. of Drones:</b>";
+  msg += String(num_drones);
+  msg += "</p>\n";
+
+  msg += "<a class=\"button button-on\" href=\"/start\">Start Spoofing</a>\n";
   msg += "<p>Pressing this button will cause the device to turn off the web server and enter spoofing only mode.\n";
   msg += "Please confirm your GPS coordinates before doing so.\n";
   msg += "You will not be able to reconnect to this page without a power cycle.</p>\n";
-  msg += "<a class=\"button button-on\" href=\"/start\">Start Spoofing</a>\n";
 
   msg += R"rawliteral(
     </body>
