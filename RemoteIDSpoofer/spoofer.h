@@ -20,8 +20,8 @@ class Spoofer {
     // conversion constants and params
     const double angle_rad2deg = 180.0 / M_PI;
     const double speed_ms2kn = 1.9438452;
-    const double max_accel = 20 * 1000; // in mms-1
-    const double max_speed = 30; // in ms-2
+    const double max_accel = 10 * 1000; // in mms-1
+    const double max_speed = 25; // in ms-2
     const double max_climbrate = 10 * 1000; // in mms-1
     const double max_height = 200; // in m over takeoff
 

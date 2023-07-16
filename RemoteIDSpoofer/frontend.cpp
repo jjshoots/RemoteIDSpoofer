@@ -84,7 +84,7 @@ String Frontend::HTML() {
           .button-off:active{background-color:#26282d;}
         </style>
       </head>
-      <body>
+      <body onload="updateTime();">
         <h1>Remote ID Spoofer</h1>
         <form class="configurator" action="/getlocation">
           Latitude: <input class="selection" type="text" name="latitude">
@@ -133,6 +133,12 @@ String Frontend::HTML() {
   msg += "You will not be able to reconnect to this page without a power cycle.</p>\n";
 
   msg += R"rawliteral(
+      <script>
+        function updateTime() {
+          var today = new Date();
+          return [today.getHours(), today.getMinutes(), today.getSeconds()];
+        }
+      </script>
     </body>
     </html>
   )rawliteral";

@@ -19,7 +19,6 @@ void Spoofer::init() {
   utm_parameters.EU_class    = 5;
   squitter.init(&utm_parameters);
   memset(&utm_data,0,sizeof(utm_data));
-  Serial.println("inited");
 }
 
 void Spoofer::updateLocation(float latitude, float longitude) {
