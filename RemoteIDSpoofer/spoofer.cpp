@@ -24,15 +24,17 @@ void Spoofer::init() {
 
 void Spoofer::updateLocation(float latitude, float longitude) {
   // define location plus some noise
-  lat_d =
+  double lat_d =
   utm_data.latitude_d =
   utm_data.base_latitude = latitude + (float) (rand() % 10 - 5) / 10000.0;
-  long_d =
+
+  double long_d =
   utm_data.longitude_d =
   utm_data.base_longitude = longitude + (float) (rand() % 10 - 5) / 10000.0;
-  utm_data.base_alt_m = (float) (rand() % 1000) / 10.0;
 
   utm_data.base_valid = 1;
+  utm_data.base_alt_m = (float) (rand() % 1000) / 10.0;
+
   utm_utils.calc_m_per_deg(lat_d,&m_deg_lat,&m_deg_long);
 }
 
@@ -42,36 +44,50 @@ void Spoofer::update() {
     return;
   }
 
-  // number of satellites
+  // update time calculations
+  double time_elapsed_secs = double(millis() - last_update) / 1000.0;
+  last_update = millis();
+
+  // random number of satellites
   utm_data.satellites = rand() % 8 + 8;
 
-  // randomly update the velocity
-  utm_data.speed_kn = constrain(utm_data.speed_kn + (rand() % 5) - 2, 1, 20);
-  speed_m_x = ((float) utm_data.speed_kn) * 0.514444 * 0.2; // Because we update every 200 ms.
+  // random acceleration to change speed
+  speed_m_x += float(rand() % int(2 * max_accel) - max_accel) / 1000.0;
+  speed_m_y += float(rand() % int(2 * max_accel) - max_accel) / 1000.0;
+  speed_m_x = constrain(speed_m_x, -max_speed, max_speed);
+  speed_m_y = constrain(speed_m_y, -max_speed, max_speed);
 
-  // randomly pick a direction to head
-  float ranf = (float) (rand() % 1000 - 500) / 1000.0;
-  int dir_change = (int) (max_dir_change * ranf);
-  utm_data.heading = (utm_data.heading + dir_change + 360) % 360;
+  // make the drone favour being around the start point, basically try to keep x, y = 0
+  // the radius that the drone is allowed to be in is basically 20 * max_speed
+  speed_m_x = 0.95 * speed_m_x - 0.05 * x;
+  speed_m_y = 0.95 * speed_m_y - 0.05 * y;
+
+  // update the actual speed in knots
+  // double absolute_speed = sqrt(pow(speed_m_x, 2) + pow(speed_m_y, 2));
+  double absolute_speed = std::abs((speed_m_x, speed_m_y));
+  utm_data.speed_kn = speed_ms2kn * absolute_speed;
+
+  // compute the heading based on speed
+  double heading_rads = atan2(speed_m_y, speed_m_x);
+  int heading_degs = int(heading_rads * angle_rad2deg);
+  utm_data.heading = heading_degs % 360;
 
   // calculate the new x, y
-  float rads = (deg2rad * (float) utm_data.heading);
-  x += speed_m_x * sin(rads);
-  y += speed_m_x * cos(rads);
+  x += speed_m_x * time_elapsed_secs;
+  y += speed_m_y * time_elapsed_secs;
 
   // calculate new height
-  float climbrate = (float) (rand() % 200 - 100) / 10.0;
-  z = constrain(z + climbrate, 10.0, 300.0);
+  float climbrate = float(rand() % int(2 * max_climbrate) - max_climbrate) / 1000.0;
+  z = constrain(z + climbrate, 1.0, max_height);
   utm_data.alt_msl_m = utm_data.base_alt_m + z;
   utm_data.alt_agl_m = z;
 
-  // update the x, y 
+  // update the lat long degrees
   utm_data.latitude_d  = utm_data.base_latitude  + (y / m_deg_lat);
   utm_data.longitude_d = utm_data.base_longitude + (x / m_deg_long);
 
   // transmit things
   squitter.transmit(&utm_data);
-  last_update = millis();
 }
 
 String Spoofer::getID() {
