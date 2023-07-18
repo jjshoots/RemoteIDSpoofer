@@ -1,13 +1,33 @@
+#include <EEPROM.h>
+
+#if defined(ARDUINO_ARCH_ESP32)
+
+#include <WiFi.h>
+#include <WebServer.h>
+
+#elif defined(ARDUINO_ARCH_ESP8266)
+
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
-#include <EEPROM.h>
+
+#else
+
+#pragma message ("Unknown Device!")
+
+#endif
 
 #ifndef FRONTEND_H
 #define FRONTEND_H
 
 class Frontend {
   private:
+    // define server depending on device
+    #if defined(ARDUINO_ARCH_ESP32)
+    WebServer server;
+    #elif defined(ARDUINO_ARCH_ESP8266)
     ESP8266WebServer server;
+    #endif
+
     String HTML();
     void handleOnConnect();
     void handleSetCoords();
