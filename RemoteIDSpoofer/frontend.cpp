@@ -58,7 +58,7 @@ void Frontend::handleSetCoords() {
   latitude = server.arg("latitude").toFloat(); 
   longitude = server.arg("longitude").toFloat();
   EEPROM.put(latitude_addr, latitude);
-  EEPROM.put(longitude_addr, latitude);
+  EEPROM.put(longitude_addr, longitude);
   server.send(200, "text/html", HTML());
 }
 

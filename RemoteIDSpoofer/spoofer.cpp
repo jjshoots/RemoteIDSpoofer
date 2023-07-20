@@ -51,15 +51,11 @@ void Spoofer::update() {
   utm_data.satellites = rand() % 8 + 8;
 
   // random acceleration to change speed
-  speed_m_x += float(rand() % int(2 * max_accel) - max_accel) / 1000.0;
-  speed_m_y += float(rand() % int(2 * max_accel) - max_accel) / 1000.0;
+  // bias towards flying near the center
+  speed_m_x += float(rand() % int(2 * max_accel) - max_accel) / 1000.0 - 0.05 * x;
+  speed_m_y += float(rand() % int(2 * max_accel) - max_accel) / 1000.0 - 0.05 * y;
   speed_m_x = constrain(speed_m_x, -max_speed, max_speed);
   speed_m_y = constrain(speed_m_y, -max_speed, max_speed);
-
-  // make the drone favour being around the start point, basically try to keep x, y = 0
-  // the radius that the drone is allowed to be in is basically 20 * max_speed
-  speed_m_x = 0.95 * speed_m_x - 0.05 * x;
-  speed_m_y = 0.95 * speed_m_y - 0.05 * y;
 
   // update the actual speed in knots
   // double absolute_speed = sqrt(pow(speed_m_x, 2) + pow(speed_m_y, 2));
