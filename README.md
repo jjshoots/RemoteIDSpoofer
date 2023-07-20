@@ -15,13 +15,11 @@ If you're using OpenDroneID available on the App Store or Play Store, you'll hav
 
 1. You need the [Arduino IDE](https://www.arduino.cc/en/software).
 2. Open the file `RemoteIDSpoofer/RemoteIDSpoofer.ino`.
-3. In Arduino IDE, go to `File` > `Preferences`, then add this URL to the `Additional Boards Manager URLs`:
-	- https://raw.githubusercontent.com/SpacehuhnTech/arduino/main/package_spacehuhn_index.json
-4. Now go to `Tools` > `Boards` > `Boards Manager`, search `deauther` and install `Deauther ESP8266 Boards`.
-5. Select your board at `Tools` > `Board` > and be sure it is at `Deauther ESP8266 Boards` (and not at `ESP8266 Modules`).
-6. Plug in your device, I used a NodeMCU v2, and select its COM port at `Tools` > `Port`.
-7. Press `upload`, or use Ctrl+U.
-8. The device should start broadcasting RemoteID packets generated for random flying machines.
+3. Now go to `Tools` > `Boards` > `Boards Manager`, search `esp8266` (or `esp32` if you're using an ESP32) and install `ESP8266 Boards` (or `esp32` by either vendors).
+4. Select your board at `Tools` > `Board` > `ESP8266 Boards` (or `esp32`). It's most likely the `Generic ESP8266 Module`.
+5. Plug in your device, and select its COM port at `Tools` > `Port`.
+6. Press `upload`, or use Ctrl+U.
+7. The device should start broadcasting RemoteID packets generated for random flying machines.
 
 ## Usage
 
@@ -40,7 +38,7 @@ Configuration is only needed when when parameter change is desired.
 
 - [x] ESP32 support
 - [x] Make it so drones don't wander away over time (something like `new_location = old_location + 0.5 * progress + 0.5 * (home - old_location)`)
-	- [ ] Fix resulting motions	
+	- [x] Fix resulting motions	
 - [ ] Get time from browser (possibly with [this](https://www.w3schools.com/jsref/jsref_gettime.asp))
 - [x] Configurable number of drones in the air
 - [x] Save config onboard
