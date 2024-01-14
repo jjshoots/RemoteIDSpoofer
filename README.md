@@ -7,7 +7,7 @@ I stand on the shoulders of giants.
 This spawns 16 different fake drones broadcasting RemoteID, with them all flying in random directions around a particular GPS location.
 
 Do check that whatever device you're using to detect the drones can sniff packets from the air fast enough.
-If you're using OpenDroneID available on the App Store or Play Store, you'll have to disable scan throttling for your device, and run the app for ~5-10 minutes before all 16 drones are actually "in the air".
+If you're using OpenDroneID available on the App Store or Play Store, you'll have to disable scan throttling for your device, and run the app for ~5-10 minutes before all 16 drones are actually "in the air". You may also have to switch off Wi-Fi, disconnecting from your usual local network on your Android device, for the Wi-Fi chip to be able to scan.
 
 <img src="./images/proof.jpg"  width="600">
 
