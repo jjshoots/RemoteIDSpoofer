@@ -54,7 +54,7 @@ This repository and its code are intended for educational purposes only.
 Neither the ESP8266, nor its SDK were meant or built for such purposes.
 Bugs can occur!
 
-It is also illegal to be broadcasting fake RemoteID packets in public airspace, in the same way that spoofing ADS-B packets is illegal.
+It is also (probably) illegal to be broadcasting fake RemoteID packets in public airspace, in the same way that spoofing ADS-B packets is illegal.
 Whatever manner you wish to use this on is at your own discretion, we don't take any responsibility for what you do with this software.
 
 [![Star History Chart](https://api.star-history.com/svg?repos=jjshoots/RemoteIDSpoofer&type=Date)](https://star-history.com/#jjshoots/RemoteIDSpoofer&Date)
