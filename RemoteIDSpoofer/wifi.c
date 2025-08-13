@@ -13,7 +13,6 @@ sw@simonwunderlich.de
 
 #if defined(ARDUINO_ARCH_ESP32)
 #include <Arduino.h>
-int clock_gettime(clockid_t, struct timespec *);
 #else 
 #include <string.h>
 #include <stddef.h>
