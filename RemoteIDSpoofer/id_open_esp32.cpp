@@ -61,14 +61,15 @@
 
 #include <esp_system.h>
 #include <esp_event.h>
-#include <esp_event_loop.h>
+
 #include <esp_wifi.h>
 #include <esp_wifi_types.h>
 #include <nvs_flash.h>
+#include <esp_netif.h>
 
 esp_err_t esp_wifi_80211_tx(wifi_interface_t ifx,const void *buffer,int len,bool en_sys_seq);
 
-esp_err_t event_handler(void *,system_event_t *);
+void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data);
 
 #if ESP32_WIFI_OPTION == 0
 static const char          *password = "password";
@@ -161,12 +162,15 @@ void init2(char *ssid,int ssid_length,uint8_t *WiFi_mac_addr,uint8_t wifi_channe
   wifi_init_config_t init_cfg = WIFI_INIT_CONFIG_DEFAULT();
 
   nvs_flash_init();
-  tcpip_adapter_init();
+  esp_netif_init();
 
-  esp_event_loop_init(event_handler,NULL);
+  ESP_ERROR_CHECK(esp_event_loop_create_default());
+  // Optional: register handler if needed
+  // ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handler, NULL, NULL));
   esp_wifi_init(&init_cfg);
   esp_wifi_set_storage(WIFI_STORAGE_RAM);
   esp_wifi_set_mode(WIFI_MODE_AP);
+  esp_netif_create_default_wifi_ap();
 
   strcpy((char *) ap_config.ap.ssid,ssid);
   strcpy((char *) ap_config.ap.password,password);
@@ -334,9 +338,8 @@ int transmit_ble2(uint8_t *ble_message,int length) {
 
 #if ID_OD_WIFI
 
-esp_err_t event_handler(void *ctx, system_event_t *event) {
-
-  return ESP_OK;
+void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data) {
+  // no-op handler (kept for compatibility)
 }
 
 #endif
